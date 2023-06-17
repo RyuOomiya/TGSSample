@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] QRCodeSet _qrSet;
     [SerializeField] Explosion _explosion;
     Vector3 _qrPos;
-    public bool _qrDetection;
         
     // Start is called before the first frame update
     void Start()
@@ -20,9 +19,12 @@ public class GameManager : MonoBehaviour
     {
         if (_explosion.DebugType == Explosion.DebugExplodeType.QRDetection)
         {
-            _qrDetection = true;
+            if(_qrSet._qrCodeSet)
+            {
+                QRDetection(_qrSet.MousePos);
+                _qrSet._qrCodeSet = false;
+            }
         }
-        else _qrDetection = false;
 
         if(_explosion.DebugType == Explosion.DebugExplodeType.MouseClick)
         {
