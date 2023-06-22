@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ExplosionSample : MonoBehaviour
 {
-    [SerializeField] GameObject gameObject;
-    [SerializeField] float m_force = 20;
-    [SerializeField] float m_radius = 5;
-    [SerializeField] float m_upwards = 0;
-    Vector3 m_position;
+    [SerializeField] GameObject gameObject;//爆発地点、マウスの座標に変えたい
+    [SerializeField] float _force = 20;//与える力
+    [SerializeField] float _radius = 5;//範囲
+    [SerializeField] float _upwards = 0;//上向きの力
+    Vector3 _position;
 
     void Update()
     {
@@ -20,16 +20,16 @@ public class ExplosionSample : MonoBehaviour
 
     public void Explosion()
     {
-        m_position = gameObject.transform.position;
+        _position = gameObject.transform.position;//爆発地点、マウスの座標が欲しい（今はgameObjectの座標になってる）
 
         // 範囲内のRigidbodyにAddExplosionForce
-        Collider[] hitColliders = Physics.OverlapSphere(m_position, m_radius);
+        Collider[] hitColliders = Physics.OverlapSphere(_position, _radius);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             var rb = hitColliders[i].GetComponent<Rigidbody>();
             if (rb)
             {
-                rb.AddExplosionForce(m_force, m_position, m_radius, m_upwards, ForceMode.Impulse);
+                rb.AddExplosionForce(_force, _position, _radius, _upwards, ForceMode.Impulse);
             }
         }
     }
